@@ -1,0 +1,418 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: "Inter", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* ============================================================
+   SISTEMA DE TEMAS (CSS variables centralizadas)
+   Temas: original (preto/branco), rosa, verde, azul, amarelo.
+   O atributo data-theme no <html> controla qual paleta ativa.
+   --accent é a cor de destaque; --bg o fundo; legibilidade preservada.
+   ============================================================ */
+:root,
+[data-theme="original"] {
+  color-scheme: dark;
+  --bg: #000000;
+  --bg-soft: #141414;
+  --bg-elev: #181818;
+  --surface: #1a1a1a;
+  --text: #ffffff;
+  --text-dim: rgba(255, 255, 255, 0.55);
+  --text-mute: rgba(255, 255, 255, 0.4);
+  --border: rgba(255, 255, 255, 0.09);
+  --border-strong: rgba(255, 255, 255, 0.18);
+  --accent: #ffffff;
+  --on-accent: #000000;
+  --accent-soft: rgba(255, 255, 255, 0.1);
+  --accent-text: #ffffff;
+}
+
+[data-theme="rosa"] {
+  color-scheme: dark;
+  --bg: #140a10;
+  --bg-soft: #20121a;
+  --bg-elev: #2a1822;
+  --surface: #2e1a26;
+  --text: #ffffff;
+  --text-dim: rgba(255, 226, 240, 0.62);
+  --text-mute: rgba(255, 226, 240, 0.44);
+  --border: rgba(255, 143, 190, 0.16);
+  --border-strong: rgba(255, 143, 190, 0.34);
+  --accent: #ff5fa2;
+  --on-accent: #2a0a18;
+  --accent-soft: rgba(255, 95, 162, 0.16);
+  --accent-text: #ff8fc0;
+}
+
+[data-theme="verde"] {
+  color-scheme: dark;
+  --bg: #07120c;
+  --bg-soft: #0e1c13;
+  --bg-elev: #132417;
+  --surface: #16281c;
+  --text: #ffffff;
+  --text-dim: rgba(226, 255, 236, 0.62);
+  --text-mute: rgba(226, 255, 236, 0.44);
+  --border: rgba(78, 224, 138, 0.16);
+  --border-strong: rgba(78, 224, 138, 0.34);
+  --accent: #34d17a;
+  --on-accent: #04170c;
+  --accent-soft: rgba(52, 209, 122, 0.16);
+  --accent-text: #6fe6a2;
+}
+
+[data-theme="azul"] {
+  color-scheme: dark;
+  --bg: #070d18;
+  --bg-soft: #0d1626;
+  --bg-elev: #121e33;
+  --surface: #152238;
+  --text: #ffffff;
+  --text-dim: rgba(226, 238, 255, 0.62);
+  --text-mute: rgba(226, 238, 255, 0.44);
+  --border: rgba(96, 165, 250, 0.16);
+  --border-strong: rgba(96, 165, 250, 0.34);
+  --accent: #4d96ff;
+  --on-accent: #04101f;
+  --accent-soft: rgba(77, 150, 255, 0.16);
+  --accent-text: #86b8ff;
+}
+
+[data-theme="amarelo"] {
+  color-scheme: dark;
+  --bg: #141006;
+  --bg-soft: #201a0c;
+  --bg-elev: #2a220f;
+  --surface: #2e2612;
+  --text: #ffffff;
+  --text-dim: rgba(255, 244, 214, 0.62);
+  --text-mute: rgba(255, 244, 214, 0.44);
+  --border: rgba(250, 204, 60, 0.16);
+  --border-strong: rgba(250, 204, 60, 0.34);
+  --accent: #f5c518;
+  --on-accent: #1c1602;
+  --accent-soft: rgba(245, 197, 24, 0.16);
+  --accent-text: #ffdd55;
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+a,
+button {
+  -webkit-touch-callout: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---------- componentes ---------- */
+.btn-primary {
+  display: inline-flex;
+  height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  background: var(--accent);
+  padding: 0 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--on-accent);
+  transition: transform 0.15s, opacity 0.15s, background 0.15s;
+}
+.btn-primary:hover {
+  transform: scale(1.03);
+  filter: brightness(1.08);
+}
+.btn-primary:active {
+  transform: scale(0.98);
+}
+.btn-primary:disabled {
+  opacity: 0.5;
+  transform: none;
+}
+.btn-outline {
+  display: inline-flex;
+  height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  border: 1px solid var(--border-strong);
+  padding: 0 1.1rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text);
+  transition: border-color 0.15s, background 0.15s, transform 0.15s;
+}
+.btn-outline:hover {
+  border-color: var(--accent);
+  transform: scale(1.02);
+}
+.btn-outline:disabled {
+  opacity: 0.5;
+}
+.btn-danger {
+  display: inline-flex;
+  height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: 1px solid var(--border-strong);
+  padding: 0 1.1rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-dim);
+}
+.btn-danger:hover {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+.icon-btn {
+  display: inline-grid;
+  height: 2.25rem;
+  width: 2.25rem;
+  place-items: center;
+  border-radius: 9999px;
+  color: var(--text-dim);
+  transition: color 0.15s, background 0.15s;
+}
+.icon-btn:hover {
+  color: var(--accent-text);
+}
+.icon-btn:disabled {
+  opacity: 0.35;
+}
+.field {
+  width: 100%;
+  border-radius: 0.6rem;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-elev);
+  padding: 0.7rem 0.9rem;
+  font-size: 0.92rem;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s;
+}
+.field:focus {
+  border-color: var(--accent);
+}
+.field::placeholder {
+  color: var(--text-mute);
+}
+.label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-dim);
+}
+.panel {
+  border-radius: 1rem;
+  border: 1px solid var(--border);
+  background: var(--bg-soft);
+  padding: 1.25rem;
+}
+.chip {
+  display: inline-flex;
+  height: 2rem;
+  align-items: center;
+  border-radius: 9999px;
+  background: var(--accent-soft);
+  padding: 0 0.9rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  transition: background 0.15s;
+}
+.chip:hover {
+  background: var(--border-strong);
+}
+.chip[aria-pressed="true"],
+.chip[data-active="true"] {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+/* ---------- barra de progresso / volume ---------- */
+.range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  cursor: pointer;
+  border-radius: 9999px;
+  background: linear-gradient(to right, var(--accent) var(--pct, 0%), var(--border-strong) var(--pct, 0%));
+}
+.range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 12px;
+  width: 12px;
+  border-radius: 9999px;
+  background: var(--accent);
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.range:hover::-webkit-slider-thumb,
+.range:focus-visible::-webkit-slider-thumb {
+  opacity: 1;
+}
+.range::-moz-range-thumb {
+  height: 12px;
+  width: 12px;
+  border: 0;
+  border-radius: 9999px;
+  background: var(--accent);
+}
+.range:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+@media (max-width: 767px) {
+  .range::-webkit-slider-thumb {
+    opacity: 1;
+  }
+}
+
+/* ---------- animações ---------- */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes eq {
+  0%,
+  100% {
+    height: 25%;
+  }
+  50% {
+    height: 100%;
+  }
+}
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(3%, -4%, 0) scale(1.08);
+  }
+}
+.animate-rise {
+  animation: rise 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.animate-fade {
+  animation: fade 0.25s ease-out;
+}
+.animate-drift {
+  animation: drift 14s ease-in-out infinite;
+}
+.eq-bar {
+  animation: eq 0.9s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+input[type="checkbox"] {
+  accent-color: var(--accent);
+  height: 1rem;
+  width: 1rem;
+}
+select.field {
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2'><path d='M6 9l6 6 6-6'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 0.9rem center;
+  padding-right: 2.2rem;
+}
+table.tbl {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+table.tbl th {
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  border-bottom: 1px solid var(--border);
+}
+table.tbl td {
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+/* ============================================================
+   Helpers temáticos (usados nos componentes via Tailwind arbitrary values)
+   Permitem trocar a cor da interface mantendo o tema.
+   ============================================================ */
+.bg-app { background: var(--bg); }
+.bg-soft { background: var(--bg-soft); }
+.bg-elev { background: var(--bg-elev); }
+.bg-surface { background: var(--surface); }
+.bg-accent { background: var(--accent); color: var(--on-accent); }
+.bg-accent-soft { background: var(--accent-soft); }
+.text-app { color: var(--text); }
+.text-dim { color: var(--text-dim); }
+.text-mute { color: var(--text-mute); }
+.text-accent { color: var(--accent); }
+.text-accent-text { color: var(--accent-text); }
+.on-accent { color: var(--on-accent); }
+.bd-app { border-color: var(--border); }
+.bd-strong { border-color: var(--border-strong); }
+.bd-accent { border-color: var(--accent); }
+
+/* Hover/active temáticos (opacidade via color-mix, compatível com modernos) */
+.hover-soft { transition: background 0.15s; }
+.hover-soft:hover { background: color-mix(in srgb, var(--accent) 7%, transparent); }
+.hover-soft-2:hover { background: color-mix(in srgb, var(--accent) 12%, transparent); }
+.active-soft { background: color-mix(in srgb, var(--accent) 6%, transparent); }
+.active-soft-1 { background: color-mix(in srgb, var(--accent) 10%, transparent); }
